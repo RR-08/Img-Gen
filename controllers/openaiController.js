@@ -6,11 +6,14 @@ const openai = new OpenAI({
 
 
 const generateImage = async (req,res)=>{
+    const {prompt,size}=req.body;
+    const imageSize=size==='small'?'256x256':size==='medium'?'512x512':'1024x1024';
+    
     try {
         const response= await openai.images.generate({
-            prompt:'cat reading book',
+            prompt,
             n:1,
-            size:"512x512",
+            size:imageSize,
             response_format:"url"
         })
         const imageUrl=response.data[0].url
